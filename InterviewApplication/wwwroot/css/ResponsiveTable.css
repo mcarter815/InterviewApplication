@@ -1,0 +1,79 @@
+﻿.table {
+    color: #333333;
+}
+
+.table-head {
+    display: table-header-group;
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    color: white;
+    background-color: #1C5E55;
+    font-weight: bold;
+}
+
+.table-head .column {
+    border-right: 1px solid #5d5d5d;
+    border-bottom: none;
+}
+
+.table-row {
+    display: table-row;
+}
+
+.table-row .column:nth-child(1) {
+    border-left: 1px solid #eeeeee;
+}
+
+.column {
+    display: table-cell;
+    padding: 10px 20px;
+    border-bottom: 1px solid #eeeeee;
+    border-right: 1px solid #eeeeee;
+    line-height: 1.8em;
+}
+
+@media all and (max-width: 640px) {
+    .table,
+    .table-row,
+    .column,
+    .column:before {
+        display: block;
+    }
+
+    .table,
+    .table-row .column:last-child {
+        border-bottom: none;
+    }
+
+    .table-head {
+        position: absolute;
+        top: -1000em;
+        left: -1000em;
+    }
+
+    .table-row {
+        border: 1px solid #eeeeee;
+        border-top: 2px solid #dddddd;
+        border-bottom: 2px solid #dddddd;
+        margin: 20px 0;
+    }
+
+    .table-row .column:nth-child(1) {
+        border-left: none;
+    }
+
+    .table-row .column:last-child {
+        border-right: none;
+    }
+
+    .table-row:last-child .column,
+    .column {
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    .column:before {
+        font-weight: bold;
+        content: ""attr(data-label)"";
+    }
+}

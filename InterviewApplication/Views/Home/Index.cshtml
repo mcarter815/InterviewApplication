@@ -1,0 +1,64 @@
+﻿@using System.Collections.Specialized
+@using InterviewApplication.Core.ExtensionMethods
+@using Microsoft.EntityFrameworkCore.Storage.ValueConversion
+@model InterviewApplication.UI.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <form id="form" class="form-inline" asp-action="Index" asp-controller="Home" method="get">
+        <input type="hidden" name="pageId" value="@Model.CurrentPage"/>
+        <div class="form-group mb-2">
+            <label for="searchText">Search:</label>
+            <input asp-for="SearchText" name="searchText" class="form-control"/>
+            <input type="submit" class="btn btn-secondary mb-2"/>
+        </div>
+
+
+        <div class="table">
+            <div class="table-head">
+                <div class="column" data-label="UserName">UserName</div>
+                <div class="column" data-label="Type">Type</div>
+                <div class="column" data-label="Status">Status</div>
+                <div class="column" data-label="Title">Title</div>
+                <div class="column" data-label="Date Created">Date Created</div>
+            </div>
+            @foreach (var record in Model.DashboardList)
+            {
+                <div class="table-row">
+                    <div class="column" data-label="UserName">@record.UserName</div>
+                    <div class="column" data-label="Type">@record.Type.GetDescription()</div>
+                    <div class="column" data-label="Status">@record.Status.GetDescription()</div>
+                    <div class="column" data-label="Title">@record.Title</div>
+                    <div class="column" data-label="Date Created">@record.DateCreated</div>
+                </div>
+            }
+        </div>
+        <div class="row">
+            @if (Model.PreviousPage > -1)
+            {
+                <div class="col-2 align-self-start">
+                    <a asp-route-pageId="@Model.PreviousPage" asp-route-searchText="@Model.SearchText" asp-route-pageSize="@Model.PageSize">Previous Page</a>
+                </div>
+            }
+            <div class="col-1 align-self-center">
+                <select id="pageSize" asp-for="PageSize" name="pageSize" asp-items="@Model.PageSizeSelectList"></select>
+            </div>
+            <div class="offset-md-6 align-self-end">
+                <a asp-route-pageId="@Model.NextPage" asp-route-searchText="@Model.SearchText" asp-route-pageSize="@Model.PageSize">Next Page</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function() {
+            $("#pageSize").change(function() {
+                $("#form").submit();
+            });
+        });
+    </script>
+}
+
